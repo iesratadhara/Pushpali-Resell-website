@@ -3,7 +3,8 @@
     "files.autoSave": "onFocusChange",
     "emmet.optimizeStylesheetParsing": false,
     "emmet.includeLanguages": {
-        "\"*html\"": "html"
+        "\"*html\"": "\"html\"",
+        "\"javascript\"": "\"javascriptreact\""
     },
     "emmet.showSuggestionsAsSnippets": true
 }
