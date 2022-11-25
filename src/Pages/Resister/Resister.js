@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { FcGoogle } from 'react-icons/fc';
 import { GoogleAuthProvider } from 'firebase/auth';
@@ -13,6 +13,7 @@ const Resister = () => {
     const googleProvider = new GoogleAuthProvider()
     const { createUser, updateUser, googleSignIn, } = useContext(AuthContext)
     const imageHostKey = process.env.REACT_APP_Imgbb_key
+    const navigate  = useNavigate()
 
 
 
@@ -53,7 +54,10 @@ const Resister = () => {
                                 .then(() => {
                                     toast.success('Updated User Profile')
 
+                                    setLogInError('')
                                     saveUserInDB(user)
+                                    navigate('/')
+
 
                                 }).catch((error) => {
                                     setLogInError(error.message)
@@ -76,8 +80,10 @@ const Resister = () => {
                     photoURL: user.photoURL,
                     role: 'buyer',
                 }
-
+                setLogInError('')
                 saveUserInDB(googleUser)
+                navigate('/')
+                
             })
             .catch((error) => {
                 console.log(error)
@@ -87,6 +93,21 @@ const Resister = () => {
 
     const saveUserInDB = (user) => {
         console.log(user);
+
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+                toast.success(`${user.name} is Added successfully`)
+                
+
+            })
     }
 
 
@@ -146,7 +167,7 @@ const Resister = () => {
                     </span>
                 </label>
             </form>
-            <p className="text-error">{logInError.message||logInError}</p>
+            <p className="text-error">{logInError.message || logInError}</p>
             <div className="divider">OR</div>
             <div>
                 <button onClick={handelGoogleSignIn} className="btn  btn-primary btn-outline w-full">
