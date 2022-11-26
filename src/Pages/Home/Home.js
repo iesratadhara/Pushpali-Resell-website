@@ -1,11 +1,12 @@
 import React from 'react';
+import CategorySec from './CategorySec';
+import Hero from './Hero';
 
 const Home = () => {
     return (
         <div>
-            <h1>this home</h1>
-            <div className="fd"></div>
-            <p></p>
+             <Hero></Hero>
+             <CategorySec></CategorySec>
         </div>
     );
 };
