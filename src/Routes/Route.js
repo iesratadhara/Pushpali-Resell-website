@@ -5,6 +5,7 @@ import AddProduct from "../Pages/AddProduct/AddProduct"
 import Home from "../Pages/Home/Home"
 import Login from "../Pages/Login/Login"
 import Resister from "../Pages/Resister/Resister"
+import PrivateRoute from "./PrivateRoute"
 
 export const router = createBrowserRouter([
     {
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/add-product',
-                element:<AddProduct></AddProduct>
+                element:<PrivateRoute><AddProduct></AddProduct></PrivateRoute>
             },
             {
                path: '/add-category',

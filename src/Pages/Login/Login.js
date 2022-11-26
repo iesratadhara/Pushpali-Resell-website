@@ -5,13 +5,15 @@ import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [loginError, setLoginError] = useState('')
     const googleProvider = new GoogleAuthProvider()
-    const { userLogIn, googleSignIn, allUser, refetch } = useContext(AuthContext)
+    const { userLogIn, user, googleSignIn, allUser, refetch } = useContext(AuthContext)
     const navigate = useNavigate()
+    const [token] = useToken(user)
 
 
 
