@@ -153,7 +153,7 @@ const Resister = () => {
                 </div>
                 <div className="form-control w-full ">
                     <label className="label">
-                        <span className="label-text text-xl">Your Name</span>
+                        <span className="label-text text-xl">Your Photo</span>
                     </label>
                     <input type="file" {...register('img', { required: 'file is requird' })} className="input input-bordered w-full input-primary " />
                     {errors.img && <p className="text-error">{errors.img?.message}</p>}
