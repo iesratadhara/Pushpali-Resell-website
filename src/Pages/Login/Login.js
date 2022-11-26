@@ -1,5 +1,5 @@
 import { GoogleAuthProvider } from 'firebase/auth';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
@@ -7,16 +7,48 @@ import { AuthContext } from '../../Context/AuthProvider';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const [loginError, setLoginError] = useState('')
     const googleProvider = new GoogleAuthProvider()
-    const {createUser,googleSignIn, } = useContext(AuthContext)
-    
+    const { userLogIn, googleSignIn, } = useContext(AuthContext)
+
 
 
 
     const handleResister = (data) => {
         console.log(data);
-        
+        userLogIn(data.email, data.password)
+            .then(result => {
+                const user = result.user
+                console.log(user);
+                // setUserEmail(data.email)
+            })
+            .catch(e => {
+                console.error(e)
+                setLoginError(e.message)
+            })
 
+    }
+
+    const handelGoogleSignIn = () => {
+        googleSignIn(googleProvider)
+            .then(result => {
+                const user = result.user
+                console.log(user);
+                // const googleUser = {
+                //     name: user.displayName,
+                //     email: user.email,
+                //     photoURL: user.photoURL,
+                //     role: 'buyer',
+                // }
+                setLoginError('')
+                // saveUserInDB(googleUser)
+                // navigate('/')
+                
+            })
+            .catch((error) => {
+                console.log(error)
+                setLoginError(error.message)
+            })
     }
 
 
@@ -24,7 +56,7 @@ const Login = () => {
         <div className="w-full md:w-2/3 lg:w-1/3 bor h-[800px] m-auto ">
             <h3 className="text-2xl text-center text-primary my-8">Resister</h3>
             <form onSubmit={handleSubmit(handleResister)}>
-                 
+
                 <div className="form-control w-full ">
                     <label className="label">
                         <span className="label-text text-lg">Your Email</span>
@@ -51,9 +83,10 @@ const Login = () => {
                     </span>
                 </label>
             </form>
+            <div>{loginError && <p className="text-error">{loginError}</p>}</div>
             <div className="divider">OR</div>
             <div>
-                <button className="btn  btn-primary btn-outline w-full">
+                <button onClick={handelGoogleSignIn} className="btn  btn-primary btn-outline w-full">
                     {" "}
                     <FcGoogle className='text-2xl mx-4'></FcGoogle> CONTINUE WITH GOOGLE
                 </button>
