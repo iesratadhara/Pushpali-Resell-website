@@ -53,7 +53,7 @@ const Login = () => {
 
 
     return (
-        <div className="w-full md:w-2/3 lg:w-1/3 bor h-[800px] m-auto ">
+        <div className="w-full md:w-2/3 lg:w-1/3 bor h-[500px] m-auto ">
             <h3 className="text-2xl text-center text-primary my-8">Resister</h3>
             <form onSubmit={handleSubmit(handleResister)}>
 
