@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile} from 'firebase/auth'
 import app from '../firebase/firebase.config';
+import { useQuery } from '@tanstack/react-query';
 
 export const AuthContext = createContext()
 const auth =  getAuth(app)
@@ -46,7 +47,14 @@ const AuthProvider = ({children}) => {
         return()=>unsubscribe()
     },[])
 
-
+    const{data: allUser =[], refetch} = useQuery({
+        queryKey:['allUser'],
+        queryFn: async()=>{
+            const res  = await fetch('http://localhost:5000/users')
+            const data = await res.json()
+            return data
+        }
+    })
 
     const authInfo = {
         user,
@@ -56,6 +64,8 @@ const AuthProvider = ({children}) => {
         updateUser,
         userLogIn,
         userSignOut,
+        allUser,
+        refetch,
     }
     return (
     <AuthContext.Provider value={authInfo}>

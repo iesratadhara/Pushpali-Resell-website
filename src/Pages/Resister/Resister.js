@@ -11,12 +11,12 @@ const Resister = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [logInError, setLogInError] = useState('')
     const googleProvider = new GoogleAuthProvider()
-    const { createUser, updateUser, googleSignIn, } = useContext(AuthContext)
+    const { createUser, updateUser, googleSignIn, allUser, refetch } = useContext(AuthContext)
     const imageHostKey = process.env.REACT_APP_Imgbb_key
-    const navigate  = useNavigate()
+    const navigate = useNavigate()
 
 
-
+    console.log(allUser);
     const handleResister = (formInfo) => {
         console.log(formInfo);
         const formData = new FormData();
@@ -55,7 +55,13 @@ const Resister = () => {
                                     toast.success('Updated User Profile')
 
                                     setLogInError('')
-                                    saveUserInDB(user)
+                                    const olduser = allUser.find(storeUser => storeUser.email === formInfo.email)
+                                    console.log(olduser);
+                                    if (!olduser.email === formInfo.email) {
+                                        saveUserInDB(user)
+                                        toast.success(`Congratulation ${formInfo.name} to Pushpali`)
+                                        refetch()
+                                    }
                                     navigate('/')
 
 
@@ -81,9 +87,15 @@ const Resister = () => {
                     role: 'buyer',
                 }
                 setLogInError('')
-                saveUserInDB(googleUser)
+                const olduser = allUser.find(storeUser => storeUser.email === user.email)
+                console.log(olduser);
+                if (!olduser.email === user.email) {
+                    saveUserInDB(googleUser)
+                    toast.success(`Congratulation ${user.displayName} to Pushpali`)
+                    refetch()
+                }
                 navigate('/')
-                
+
             })
             .catch((error) => {
                 console.log(error)
@@ -105,7 +117,7 @@ const Resister = () => {
             .then(result => {
                 console.log(result);
                 toast.success(`${user.name} is Added successfully`)
-                
+
 
             })
     }

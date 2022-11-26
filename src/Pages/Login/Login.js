@@ -1,15 +1,17 @@
 import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [loginError, setLoginError] = useState('')
     const googleProvider = new GoogleAuthProvider()
-    const { userLogIn, googleSignIn, } = useContext(AuthContext)
+    const { userLogIn, googleSignIn, allUser, refetch } = useContext(AuthContext)
+    const navigate = useNavigate()
 
 
 
@@ -34,15 +36,21 @@ const Login = () => {
             .then(result => {
                 const user = result.user
                 console.log(user);
-                // const googleUser = {
-                //     name: user.displayName,
-                //     email: user.email,
-                //     photoURL: user.photoURL,
-                //     role: 'buyer',
-                // }
+                const googleUser = {
+                    name: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL,
+                    role: 'buyer',
+                }
                 setLoginError('')
-                // saveUserInDB(googleUser)
-                // navigate('/')
+                const olduser = allUser.find(storeUser => storeUser.email === user.email)
+                console.log(olduser);
+                if (!olduser.email === user.email) {
+                    saveUserInDB(googleUser)
+                    toast.success(`Congratulation ${user.displayName} to Pushpali`)
+                    refetch()
+                }
+                navigate('/')
                 
             })
             .catch((error) => {
@@ -50,7 +58,24 @@ const Login = () => {
                 setLoginError(error.message)
             })
     }
+    const saveUserInDB = (user) => {
+        console.log(user);
 
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+                toast.success(`${user.name} is Added successfully`)
+
+
+            })
+    }
 
     return (
         <div className="w-full md:w-2/3 lg:w-1/3 bor h-[500px] m-auto ">
