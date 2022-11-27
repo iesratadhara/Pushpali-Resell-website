@@ -6,6 +6,7 @@ import AddProduct from "../Pages/AddProduct/AddProduct"
 import Dashboard from "../Pages/Dashboard/Dashboard"
 import Home from "../Pages/Home/Home"
 import Login from "../Pages/Login/Login"
+import ProductCategory from "../Pages/ProductCategory/ProductCategory"
 import Resister from "../Pages/Resister/Resister"
 import PrivateRoute from "./PrivateRoute"
 
@@ -33,6 +34,12 @@ export const router = createBrowserRouter([
                 element: <PrivateRoute><AddProduct></AddProduct></PrivateRoute>
             },
             {
+                path: '/category/:name',
+                element: <PrivateRoute><ProductCategory></ProductCategory></PrivateRoute>,
+                loader:({params})=> fetch(`http://localhost:5000/category/${params.name}`),
+            
+            },
+            {
                 path: '/add-category',
                 element: <AddCategory></AddCategory>
 
@@ -48,6 +55,7 @@ export const router = createBrowserRouter([
                 path: '/dashboard/',
                 element: <Dashboard></Dashboard>
             }
+
         ]
     }
 ])

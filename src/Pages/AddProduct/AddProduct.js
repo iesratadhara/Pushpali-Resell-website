@@ -54,6 +54,7 @@ const AddProduct = () => {
                         useTime: data.useTime,
                         sellerEmail: user.email,
                         sellerName: user.displayName,
+                        productDetails:data.productDetails
                     }
                     saveProductInDB(productInfo)
                     refetch()
