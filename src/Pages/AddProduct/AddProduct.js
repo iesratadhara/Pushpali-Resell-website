@@ -58,7 +58,8 @@ const AddProduct = () => {
                         sellerEmail: user.email,
                         sellerName: user.displayName,
                         productDetails:data.productDetails,
-                        categoryId:_id
+                        categoryId:_id,
+                        status:'unsold'
                     }
                     saveProductInDB(productInfo)
                     refetch()
@@ -74,6 +75,7 @@ const AddProduct = () => {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
+                    'authoraization': `bearer ${localStorage.getItem('accessToken')}`
                 },
                 body: JSON.stringify(productInfo)
             })

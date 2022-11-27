@@ -32,7 +32,7 @@ const CategorySec = () => {
                             <h2 className="card-title">{category.categoryName}</h2>
                              
                             <div className="card-actions">
-                                <Link to={`/category/${category.categoryName}`}><button  className="btn btn-primary">Show Product</button></Link>
+                                <Link to={`/category/${category._id}`}><button  className="btn btn-primary">Show Product</button></Link>
                             </div>
                         </div>
                     </div>
