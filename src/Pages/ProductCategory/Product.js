@@ -9,8 +9,8 @@ const Product = ({ product }) => {
     const { name, productImg, condition, buyingPrice, sellingPrice, postTime, sellerPhone, location, useTime, sellerEmail, sellerName, productDetails } = product
 
     const seller = allUser.find(user => user.email === sellerEmail)
-    console.log(allUser);
-    console.log(seller);
+    // console.log(allUser);
+    // console.log(seller);
 
 
     return (

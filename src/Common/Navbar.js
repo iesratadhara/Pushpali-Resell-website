@@ -52,7 +52,8 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-            <label tabIndex={2} htmlFor="dashboard-layout" className="drawer-button btn btn-ghost lg:hidden"><Link><MdOutlineDashboard></MdOutlineDashboard></Link> </label>
+    
+            <label tabIndex={2} htmlFor="dashboard-layout" className="drawer-button btn btn-ghost lg:hidden"><MdOutlineDashboard></MdOutlineDashboard> </label>
              
              
             </div>

@@ -20,14 +20,14 @@ const DashboardLayout = () => {
 
     </>
     const sellerMenu = <>
-        <li><Link>My product</Link></li>
-        <li><Link>Add Product</Link></li>
-        <li><Link>My Buyer </Link></li>
+        <li><Link to={'/dashboard/my-product'}>My product</Link></li>
+        <li><Link to={'/dashboard/add-product'}>Add Product</Link></li>
+        <li><Link to={'/dashboard/my-buyer'}>My Buyer </Link></li>
     </>
     const adminMenu = <>
-        <li><Link>All Seller</Link></li>
-        <li><Link>My Buyer </Link></li>
-        <li><Link>Reported Product</Link></li>
+        <li><Link to={'/dashboard/all-seller'}>All Seller</Link></li>
+        <li><Link to={'/dashboard/all-buyer'}>My Buyer </Link></li>
+        <li><Link to={'/dashboard/reported-product'}>Reported Product</Link></li>
 
 
 

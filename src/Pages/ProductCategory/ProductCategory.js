@@ -4,7 +4,7 @@ import Product from './Product';
 
 const ProductCategory = () => {
     const products = useLoaderData()
-    console.log(products[0]);
+    console.log(products);
     return (
         <div>
             <h2 className='text-center py-12 text-primary text-4xl font-bold '>Category: {products[0]?.category}</h2>

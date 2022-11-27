@@ -4,15 +4,15 @@ import Loader from '../Common/Loader/Loader';
 import { AuthContext } from '../Context/AuthProvider';
 import useAdmin from '../hooks/useAdmin';
 
-const AdminRoute = ({children}) => {
-    const {user, loading} = useContext(AuthContext)
+const AdminRoute = ({ children }) => {
+    const { user, loading } = useContext(AuthContext)
     const [isAdmin, isAdminLoading] = useAdmin(user?.email)
     const location = useLocation()
 
-    if(loading||isAdminLoading){
+    if (loading || isAdminLoading) {
         return <Loader></Loader>
     }
-    if(user && isAdmin){
+    if (user && isAdmin) {
         return children
     }
 
