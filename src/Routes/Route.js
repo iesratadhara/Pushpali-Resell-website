@@ -6,6 +6,7 @@ import AddProduct from "../Pages/AddProduct/AddProduct"
 import Dashboard from "../Pages/Dashboard/Dashboard"
 import Home from "../Pages/Home/Home"
 import Login from "../Pages/Login/Login"
+import Myproduct from "../Pages/Myproduct/Myproduct"
 import ProductCategory from "../Pages/ProductCategory/ProductCategory"
 import Resister from "../Pages/Resister/Resister"
 import PrivateRoute from "./PrivateRoute"
@@ -49,15 +50,16 @@ export const router = createBrowserRouter([
         element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children: [
             {
-                path: '/dashboard/',
+                path: '/dashboard',
                 element: <Dashboard></Dashboard>
             },
             {
                 path: '/dashboard/add-product',
-                element: <PrivateRoute><AddProduct></AddProduct></PrivateRoute>
+                element:  <AddProduct></AddProduct> 
             },
             {
-                path:'/dashboard/my-product'
+                path:'/dashboard/my-product',
+                element:<Myproduct></Myproduct>
             }
 
         ]

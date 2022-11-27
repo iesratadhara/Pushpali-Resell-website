@@ -40,6 +40,9 @@ const AddProduct = () => {
                 console.log(user);
                 if (imgData.success) {
                     const imgUrl = imgData.data.url
+                    // console.log(categories);
+                    const { _id} = categories.find(category=>category.categoryName
+                        === data.category)
 
                     const productInfo = {
                         name: data.productName,
@@ -54,7 +57,8 @@ const AddProduct = () => {
                         useTime: data.useTime,
                         sellerEmail: user.email,
                         sellerName: user.displayName,
-                        productDetails:data.productDetails
+                        productDetails:data.productDetails,
+                        categoryId:_id
                     }
                     saveProductInDB(productInfo)
                     refetch()

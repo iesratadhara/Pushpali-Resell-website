@@ -5,6 +5,13 @@ import { MdOutlineDashboard } from 'react-icons/md'
 
 const Navbar = () => {
     const {user, userSignOut} = useContext(AuthContext);
+    // const url = `${user.email}`
+    // const {} = useQuery({
+    //     queryKey:['email'],
+    //     queryFn: async ()=>{
+    //         const res = fetch()
+    //     }
+    // })
     const menuItem = <>
         <li><Link to={'/'}>Home</Link></li>
         <li><Link>Category</Link></li>
