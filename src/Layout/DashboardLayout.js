@@ -1,22 +1,50 @@
-import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Navbar from '../Common/Navbar';
+import { AuthContext } from '../Context/AuthProvider';
+import useToken from '../hooks/useToken';
 
 const DashboardLayout = () => {
+    const { user } = useContext(AuthContext);
+    const [token, jwtUser] = useToken(user.email)
+    const navigate = useNavigate()
+
+    if (!token) {
+        navigate('/')
+    }
+    let menu
     const buyerMenu = <>
-        <Link>My Order</Link>
-        <Link>Wishish</Link>
+
+        <li><Link>My Order</Link></li>
+        <li><Link>Wishish</Link></li>
+
     </>
     const sellerMenu = <>
-        <Link>My product</Link>
-        <Link>Add Product</Link>
-        <Link>My Buyer </Link>
+        <li><Link>My product</Link></li>
+        <li><Link>Add Product</Link></li>
+        <li><Link>My Buyer </Link></li>
     </>
     const adminMenu = <>
-        <Link>All Seller</Link>
-        <Link>My Buyer </Link>
-        <Link>Reported Product</Link>
+        <li><Link>All Seller</Link></li>
+        <li><Link>My Buyer </Link></li>
+        <li><Link>Reported Product</Link></li>
+
+
+
     </>
+
+    if (jwtUser?.role === 'buyer') {
+        menu = buyerMenu
+    }
+    else if (jwtUser?.role === 'seller') {
+        menu = sellerMenu
+    }
+    else if (jwtUser?.role === 'admin') {
+        menu = adminMenu
+    }
+    else {
+        return navigate('/')
+    }
     return (
         <div>
             <Navbar></Navbar>
@@ -29,24 +57,11 @@ const DashboardLayout = () => {
                 <div className="drawer-side">
                     <label htmlFor="dashboard-layout" className="drawer-overlay"></label>
                     <ul className="menu bg-base-100 w-56 p-2 rounded-box">
-                        <li>
-                            <Link>
 
-                                Item 2
-                            </Link>
-                        </li>
-                        <li>
-                            <Link>
+                        {
+                            menu
+                        }
 
-                                Item 1
-                            </Link>
-                        </li>
-                        <li>
-                            <Link>
-
-                                Item 3
-                            </Link>
-                        </li>
                     </ul>
                 </div>
             </div>
