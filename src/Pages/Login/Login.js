@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
 import useToken from '../../hooks/useToken';
 
@@ -11,11 +11,17 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [loginError, setLoginError] = useState('')
     const googleProvider = new GoogleAuthProvider()
-    const { userLogIn, user, googleSignIn, allUser, refetch } = useContext(AuthContext)
+    const [userEmail, setUserEmail] = useState('')
+    const { userLogIn, googleSignIn, allUser, refetch } = useContext(AuthContext)
     const navigate = useNavigate()
-    const [token] = useToken(user)
+    const location = useLocation() 
+    const [token] = useToken(userEmail)
 
+    const from = location.state?.from?.pathname || '/'
 
+    if(token){
+        navigate(from,{replace:true})
+    }
 
 
     const handleResister = (data) => {
@@ -24,7 +30,7 @@ const Login = () => {
             .then(result => {
                 const user = result.user
                 console.log(user);
-                // setUserEmail(data.email)
+                setUserEmail(user.email)
             })
             .catch(e => {
                 console.error(e)
@@ -45,6 +51,7 @@ const Login = () => {
                     role: 'buyer',
                 }
                 setLoginError('')
+                setUserEmail(user.email)
                 const olduser = allUser.find(storeUser => storeUser.email === user.email)
                 console.log(olduser);
                 if (!olduser.email === user.email) {
@@ -52,8 +59,7 @@ const Login = () => {
                     toast.success(`Congratulation ${user.displayName} to Pushpali`)
                     refetch()
                 }
-                navigate('/')
-                
+           
             })
             .catch((error) => {
                 console.log(error)

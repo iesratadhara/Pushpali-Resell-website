@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { MdLocationPin, MdPhone } from 'react-icons/md';
+import { MdLocationPin, MdPhone, MdReport } from 'react-icons/md';
+import { BsClockFill, BsFillSuitHeartFill } from 'react-icons/bs';
 import { AuthContext } from '../../Context/AuthProvider';
 
 const Product = ({ product }) => {
-    const { allUser, refetch } = useContext(AuthContext)
-    const { name, productImg, category, condition, buyingPrice, sellingPrice, postTime, sellerPhone, location, useTime, sellerEmail, sellerName ,productDetails} = product
+    const { allUser} = useContext(AuthContext)
+    const { name, productImg, condition, buyingPrice, sellingPrice, postTime, sellerPhone, location, useTime, sellerEmail, sellerName, productDetails } = product
 
     const seller = allUser.find(user => user.email === sellerEmail)
     console.log(allUser);
@@ -15,16 +16,23 @@ const Product = ({ product }) => {
 
 
         <div className="card   bg-base-100  card-bordered">
-            <div className='mt-4 ml-4 flex gap-4 items-center mb-4'>
-                <div className="avatar">
-                    <div className="w-16 rounded-full">
-                        <img src={seller.photoURL} alt=" " />
+            <div className='flex justify-between items-center'>
+                <div className='mt-4 ml-4 flex gap-4 items-center mb-4'>
+                    <div className="avatar">
+                        <div className="w-16 rounded-full">
+                            <img src={seller.photoURL} alt=" " />
+                        </div>
+                    </div>
+
+                    <div className=''>
+                        <h4 className='font-semibold'>{sellerName}</h4>
+                        <p className='inline-flex text-sm items-center'><BsClockFill className='mr-2'></BsClockFill><span>{postTime}</span></p>
                     </div>
                 </div>
+                <div className='mr-4 flex gap-4 items-center'>
+                    <div><BsFillSuitHeartFill className='text-xl hover:text-secondary'></BsFillSuitHeartFill></div>
+                    <div><MdReport className='text-2xl hover:text-secondary'></MdReport></div>
 
-                <div className=''>
-                    <h4 className='font-semibold'>{sellerName}</h4>
-                    <p className='inline-flex  items-center'><MdLocationPin></MdLocationPin><span>{postTime}</span></p>
                 </div>
             </div>
             <figure><img src={productImg} alt="Shoes" /></figure>

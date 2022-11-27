@@ -5,6 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { AuthContext } from '../../Context/AuthProvider';
 import toast from 'react-hot-toast';
+import useToken from '../../hooks/useToken';
 
 
 const Resister = () => {
@@ -12,9 +13,14 @@ const Resister = () => {
     const [logInError, setLogInError] = useState('')
     const googleProvider = new GoogleAuthProvider()
     const { createUser, updateUser, googleSignIn, allUser, refetch } = useContext(AuthContext)
+    const [createdUserEmail, setCreatedUserEmail] = useState('')
+    const [token] = useToken(createdUserEmail)
     const imageHostKey = process.env.REACT_APP_Imgbb_key
     const navigate = useNavigate()
 
+    if (token) {
+        navigate('/')
+    }
 
     console.log(allUser);
     const handleResister = (formInfo) => {
@@ -62,8 +68,8 @@ const Resister = () => {
                                         toast.success(`Congratulation ${formInfo.name} to Pushpali`)
                                         refetch()
                                     }
-                                    navigate('/')
 
+                                setCreatedUserEmail(user.email)
 
                                 }).catch((error) => {
                                     setLogInError(error.message)
@@ -94,7 +100,7 @@ const Resister = () => {
                     toast.success(`Congratulation ${user.displayName} to Pushpali`)
                     refetch()
                 }
-                navigate('/')
+                setCreatedUserEmail(user.email)
 
             })
             .catch((error) => {
