@@ -58,23 +58,15 @@ const Resister = () => {
                             }
                             updateUser(userInfo)
                                 .then(() => {
-                                    toast.success('Updated User Profile')
-
                                     setLogInError('')
-                                    const olduser = allUser.find(storeUser => storeUser.email === formInfo.email)
-                                    console.log(olduser);
-                                    if (!olduser.email === formInfo.email) {
-                                        saveUserInDB(user)
-                                        toast.success(`Congratulation ${formInfo.name} to Pushpali`)
-                                        refetch()
-                                    }
-
-                                setCreatedUserEmail(user.email)
+                                    toast.success('Updated User Profile')
+                                    saveUserInDB(user)
 
                                 }).catch((error) => {
                                     setLogInError(error.message)
                                     toast.error(`User Profile not Update.Something wrong:${error.message}`)
                                 });
+                            refetch()
                         })
                 }
             });
@@ -93,15 +85,8 @@ const Resister = () => {
                     role: 'buyer',
                 }
                 setLogInError('')
-                const olduser = allUser.find(storeUser => storeUser.email === user.email)
-                console.log(olduser);
-                if (!olduser.email === user.email) {
-                    saveUserInDB(googleUser)
-                    toast.success(`Congratulation ${user.displayName} to Pushpali`)
-                    refetch()
-                }
-                setCreatedUserEmail(user.email)
 
+                saveUserInDB(googleUser)
             })
             .catch((error) => {
                 console.log(error)
@@ -113,7 +98,7 @@ const Resister = () => {
         console.log(user);
 
         fetch('http://localhost:5000/users', {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'content-type': 'application/json',
             },
@@ -122,8 +107,8 @@ const Resister = () => {
             .then(res => res.json())
             .then(result => {
                 console.log(result);
-                toast.success(`${user.name} is Added successfully`)
-
+                toast.success(`${user.name}  Added successfully`)
+                setCreatedUserEmail(user.email)
 
             })
     }

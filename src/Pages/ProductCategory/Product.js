@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { MdLocationPin, MdPhone, MdReport } from 'react-icons/md';
 import { BsClockFill, BsFillSuitHeartFill } from 'react-icons/bs';
 import { AuthContext } from '../../Context/AuthProvider';
+import ReactTooltip from 'react-tooltip'
 
 const Product = ({ product }) => {
     const { allUser} = useContext(AuthContext)
@@ -30,8 +31,8 @@ const Product = ({ product }) => {
                     </div>
                 </div>
                 <div className='mr-4 flex gap-4 items-center'>
-                    <div><BsFillSuitHeartFill className='text-xl hover:text-secondary'></BsFillSuitHeartFill></div>
-                    <div><MdReport className='text-2xl hover:text-secondary'></MdReport></div>
+                    <div><BsFillSuitHeartFill data-tip="Add Wish List" className='text-xl hover:text-secondary'></BsFillSuitHeartFill></div>
+                    <div><MdReport data-tip="Report to admin" className='text-2xl hover:text-secondary'></MdReport></div>
 
                 </div>
             </div>
@@ -63,6 +64,7 @@ const Product = ({ product }) => {
 
                 </div>
             </div>
+            <ReactTooltip />
         </div>
     );
 };

@@ -12,7 +12,7 @@ const Login = () => {
     const [loginError, setLoginError] = useState('')
     const googleProvider = new GoogleAuthProvider()
     const [userEmail, setUserEmail] = useState('')
-    const { userLogIn, googleSignIn, allUser, refetch } = useContext(AuthContext)
+    const { userLogIn, googleSignIn,} = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation() 
     const [token] = useToken(userEmail)
@@ -24,7 +24,7 @@ const Login = () => {
     }
 
 
-    const handleResister = (data) => {
+    const handleloginWithPass = (data) => {
         console.log(data);
         userLogIn(data.email, data.password)
             .then(result => {
@@ -52,13 +52,10 @@ const Login = () => {
                 }
                 setLoginError('')
                 setUserEmail(user.email)
-                const olduser = allUser.find(storeUser => storeUser.email === user.email)
-                console.log(olduser);
-                if (!olduser.email === user.email) {
+                
                     saveUserInDB(googleUser)
-                    toast.success(`Congratulation ${user.displayName} to Pushpali`)
-                    refetch()
-                }
+                     
+                
            
             })
             .catch((error) => {
@@ -70,7 +67,7 @@ const Login = () => {
         console.log(user);
 
         fetch('http://localhost:5000/users', {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'content-type': 'application/json',
             },
@@ -86,14 +83,14 @@ const Login = () => {
     }
 
     return (
-        <div className="w-full md:w-2/3 lg:w-1/3 bor h-[500px] m-auto ">
-            <h3 className="text-2xl text-center text-primary my-8">Resister</h3>
-            <form onSubmit={handleSubmit(handleResister)}>
+        <div className="w-full md:w-2/3 lg:w-1/3 bor h-[500px] m-auto">
+            <h3 className="text-2xl text-center text-primary my-8">Login</h3>
+            <form onSubmit={handleSubmit(handleloginWithPass)}>
 
                 <div className="form-control w-full ">
                     <label className="label">
                         <span className="label-text text-lg">Your Email</span>
-                    </label>
+              </label>
                     <input type="email" {...register('email', { required: 'Email is requird' })} className="input input-bordered w-full input-primary " />
                     {errors.email && <p className="text-error">{errors.email?.message}</p>}
                 </div>
