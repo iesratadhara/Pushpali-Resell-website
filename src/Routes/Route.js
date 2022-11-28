@@ -6,6 +6,7 @@ import AddCategory from "../Pages/AddCategory/AddCategory"
 import AddProduct from "../Pages/AddProduct/AddProduct"
 import AllBuyer from "../Pages/AllBuyer/AllBuyer"
 import AllSeller from "../Pages/AllSeller/AllSeller"
+import Blog from "../Pages/Blog"
 import Dashboard from "../Pages/Dashboard/Dashboard"
 import Home from "../Pages/Home/Home"
 import Login from "../Pages/Login/Login"
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login></Login>
+            },
+            {
+                path: '/blog',
+                element:  <Blog></Blog>
             },
             
             {
