@@ -15,8 +15,8 @@ const DashboardLayout = () => {
     let menu
     const buyerMenu = <>
 
-        <li><Link>My Order</Link></li>
-        <li><Link>Wishish</Link></li>
+        <li><Link to={'/dashboard/my-order'}>My Order</Link></li>
+        <li><Link to={'/dashboard/wish-list'}>Wishish</Link></li>
 
     </>
     const sellerMenu = <>
