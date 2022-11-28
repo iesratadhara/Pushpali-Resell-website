@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom"
+import Errorpege from "../Common/ErrorPage/Errorpege"
 import DashboardLayout from "../Layout/DashboardLayout"
 import Main from "../Layout/Main"
 import AddCategory from "../Pages/AddCategory/AddCategory"
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement:<Errorpege></Errorpege>,
         children: [
             {
                 path: '/',
@@ -56,6 +58,7 @@ export const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        errorElement:<Errorpege></Errorpege>,
         children: [
             {
                 path: '/dashboard',
