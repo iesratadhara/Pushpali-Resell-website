@@ -1,12 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
+import ConformationModal from '../../Common/ConfrimationModal';
 import { AuthContext } from '../../Context/AuthProvider';
 
 const Myproduct = () => {
     const { user } = useContext(AuthContext);
+    const [deletingProduct, setDeletingProduct] = useState(null)
     const url = `http://localhost:5000/my-products?email=${user.email}`
 
-    const { data: myProducts = [] } = useQuery({
+    const { data: myProducts = [], refetch } = useQuery({
         queryKey: ['my-products', user?.email],
         queryFn: async () => {
             const res = await fetch(url, {
@@ -17,8 +20,22 @@ const Myproduct = () => {
         }
 
     })
-    const handleMakeAdmin =()=>{
-
+    const handleDeleteProduct = (product) => {
+        console.log(product);
+        const {_id}= product
+        fetch(`http://localhost:5000/delete-product/${_id}`, {
+            method: 'DELETE',
+            headers: {
+                'authoraization': `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    refetch();
+                    toast.success(`Product deleted successfully`)
+                }
+            })
     }
 
     console.log(myProducts);
@@ -44,15 +61,29 @@ const Myproduct = () => {
                             myProducts.map((product, i) => <tr key={product._id}>
                                 <th>{i + 1}</th>
                                 <td>
-                                        <img src= {product.productImg} className='w-24 rounded avatar' alt='' />
-                                </td> 
+                                    <img src={product.productImg} className='w-24 rounded avatar' alt='' />
+                                </td>
                                 <td>{product.name}</td>
                                 <td>{product.category}</td>
                                 <td> ${product.sellingPrice}</td>
+
+                                 <td> 
+                                <label htmlFor="conformation-modal"
+                                       onClick={() => setDeletingProduct(product)}
+                                        className='btn btn-error btn-xs'>Delete</label>
+                                </td>
                                 
-                                <td>{user?.role !== 'admin' && <button onClick={() => handleMakeAdmin(user._id)} className='btn btn-xs btn-error'>Delete</button>}</td>
                                 <td><button className='btn btn-primary btn-xs'>Advertrise</button></td>
                                 <td><button className='btn btn-warning btn-xs btn-disabled'>unsold</button></td>
+
+                                <ConformationModal
+                                    modalTitle={`Are You sure to delete ${product.name} ?`}
+                                    modalBody={'if you deleted  this its permanently delete form this wensite '}
+                                    action={handleDeleteProduct}
+                                    actionText={'Delete'}
+                                    actoinData={deletingProduct}
+
+                                ></ConformationModal>
                             </tr>)
                         }
 
