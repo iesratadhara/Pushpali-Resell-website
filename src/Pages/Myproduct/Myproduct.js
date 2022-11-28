@@ -7,7 +7,11 @@ import { AuthContext } from '../../Context/AuthProvider';
 const Myproduct = () => {
     const { user } = useContext(AuthContext);
     const [deletingProduct, setDeletingProduct] = useState(null)
+    const [advertisingProduct, setAdvertisingProduct] = useState(null);
     const url = `http://localhost:5000/my-products?email=${user.email}`
+
+    const deleteproductModalID = 'modalForProductDelete'
+    const adProductModalID = 'modalForProductAdverties'
 
     const { data: myProducts = [], refetch } = useQuery({
         queryKey: ['my-products', user?.email],
@@ -22,7 +26,7 @@ const Myproduct = () => {
     })
     const handleDeleteProduct = (product) => {
         console.log(product);
-        const {_id}= product
+        const { _id } = product
         fetch(`http://localhost:5000/delete-product/${_id}`, {
             method: 'DELETE',
             headers: {
@@ -34,6 +38,25 @@ const Myproduct = () => {
                 if (data.deletedCount > 0) {
                     refetch();
                     toast.success(`Product deleted successfully`)
+                }
+            })
+    }
+
+
+    const handelAdvertiesingProduct = (product) => {
+        const { _id } = product
+        fetch(`http://localhost:5000/products/advarties/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'authoraization': `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    refetch()
+                    toast.success(`${product.name} added to Adverties`)
                 }
             })
     }
@@ -67,23 +90,47 @@ const Myproduct = () => {
                                 <td>{product.category}</td>
                                 <td> ${product.sellingPrice}</td>
 
-                                 <td> 
-                                <label htmlFor="conformation-modal"
-                                       onClick={() => setDeletingProduct(product)}
+                                <td>
+                                    <label htmlFor={deleteproductModalID}
+                                        onClick={() => setDeletingProduct(product)}
                                         className='btn btn-error btn-xs'>Delete</label>
+
                                 </td>
-                                
-                                <td><button className='btn btn-primary btn-xs'>Advertrise</button></td>
+
+                                <td>
+                                    {
+                                        product?.advertise ?
+                                            <button className='btn btn-success btn-xs'>Running Ad</button>
+                                            :
+                                            <label htmlFor={adProductModalID}
+                                                onClick={() => setAdvertisingProduct(product)}
+                                                className='btn btn-primary btn-xs'>Adverties</label>
+                                    }
+
+                                </td>
+
                                 <td><button className='btn btn-warning btn-xs btn-disabled'>unsold</button></td>
 
                                 <ConformationModal
-                                    modalTitle={`Are You sure to delete ${product.name} ?`}
+                                    modalTitle={`Are You sure to delete This product ?`}
                                     modalBody={'if you deleted  this its permanently delete form this wensite '}
                                     action={handleDeleteProduct}
                                     actionText={'Delete'}
                                     actoinData={deletingProduct}
+                                    modalId={deleteproductModalID}
 
                                 ></ConformationModal>
+
+                                <ConformationModal
+                                    modalTitle={`Are You sure to Adverties This product ?`}
+                                    modalBody={'if you Adverties  this it will be show on  Home page on this wensite '}
+                                    action={handelAdvertiesingProduct}
+                                    actionText={'Adverties'}
+                                    actoinData={advertisingProduct}
+                                    modalId ={adProductModalID}
+
+                                ></ConformationModal>
+
                             </tr>)
                         }
 
