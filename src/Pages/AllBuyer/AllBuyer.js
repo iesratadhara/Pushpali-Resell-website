@@ -14,7 +14,7 @@ const AllBuyer = () => {
     const { data: allBuyer = [], refetch } = useQuery({
         queryKey: ['all-buyer'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/all-buyer', {
+            const res = await fetch('https://pushpali-server-iesratadhara.vercel.app/all-buyer', {
                 method: 'GET',
                 headers: {
                     'authoraization': `bearer ${localStorage.getItem('accessToken')}`
@@ -28,7 +28,7 @@ const AllBuyer = () => {
     const handleDeleteuser = (user) => {
         console.log(user);
         const { _id } = user
-        fetch(`http://localhost:5000/delete-buyer/${_id}`, {
+        fetch(`https://pushpali-server-iesratadhara.vercel.app/delete-buyer/${_id}`, {
             method: 'DELETE',
             headers: {
                 'authoraization': `bearer ${localStorage.getItem('accessToken')}`
@@ -44,7 +44,7 @@ const AllBuyer = () => {
     }
     const handelVerifyingUser = (user) => {
         const { _id } = user
-        fetch(`http://localhost:5000/verify-buyer/${_id}`, {
+        fetch(`https://pushpali-server-iesratadhara.vercel.app/verify-buyer/${_id}`, {
             method: 'PUT',
             headers: {
                 'authoraization': `bearer ${localStorage.getItem('accessToken')}`

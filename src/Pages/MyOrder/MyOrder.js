@@ -5,7 +5,7 @@ import { AuthContext } from '../../Context/AuthProvider';
 const MyOrder = () => {
     const { user } = useContext(AuthContext);
 
-    const url = `http://localhost:5000/my-orders?email=${user.email}`
+    const url = `https://pushpali-server-iesratadhara.vercel.app/my-orders?email=${user.email}`
 
 
 
@@ -34,7 +34,7 @@ const MyOrder = () => {
                             <th>Price</th>
                         
                         
-                            <th>Avilability</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>

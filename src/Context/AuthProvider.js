@@ -50,7 +50,7 @@ const AuthProvider = ({children}) => {
     const{data: allUser =[], refetch} = useQuery({
         queryKey:['allUser'],
         queryFn: async()=>{
-            const res  = await fetch('http://localhost:5000/users')
+            const res  = await fetch('https://pushpali-server-iesratadhara.vercel.app/users')
             const data = await res.json()
             return data
         }

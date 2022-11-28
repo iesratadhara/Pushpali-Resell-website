@@ -12,7 +12,7 @@ const ReportrdProduct = () => {
     const { data: reportedProduct = [], refetch } = useQuery({
         queryKey: ['reported-products'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/products/reported', {
+            const res = await fetch('https://pushpali-server-iesratadhara.vercel.app/products/reported', {
                 headers: { 'authoraization': `bearer ${localStorage.getItem('accessToken')}` }
             })
             const data = await res.json()
@@ -24,7 +24,7 @@ const ReportrdProduct = () => {
     const handleDeleteProduct = (product) => {
         console.log(product);
         const { _id } = product
-        fetch(`http://localhost:5000/delete-reported-product/${_id}`, {
+        fetch(`https://pushpali-server-iesratadhara.vercel.app/delete-reported-product/${_id}`, {
             method: 'DELETE',
             headers: {
                 'authoraization': `bearer ${localStorage.getItem('accessToken')}`

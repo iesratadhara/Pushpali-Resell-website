@@ -8,7 +8,7 @@ const Myproduct = () => {
     const { user } = useContext(AuthContext);
     const [deletingProduct, setDeletingProduct] = useState(null)
     const [advertisingProduct, setAdvertisingProduct] = useState(null);
-    const url = `http://localhost:5000/my-products?email=${user.email}`
+    const url = `https://pushpali-server-iesratadhara.vercel.app/my-products?email=${user.email}`
 
     const deleteproductModalID = 'modalForProductDelete'
     const adProductModalID = 'modalForProductAdverties'
@@ -27,7 +27,7 @@ const Myproduct = () => {
     const handleDeleteProduct = (product) => {
         console.log(product);
         const { _id } = product
-        fetch(`http://localhost:5000/delete-product/${_id}`, {
+        fetch(`https://pushpali-server-iesratadhara.vercel.app/delete-product/${_id}`, {
             method: 'DELETE',
             headers: {
                 'authoraization': `bearer ${localStorage.getItem('accessToken')}`
@@ -45,7 +45,7 @@ const Myproduct = () => {
 
     const handelAdvertiesingProduct = (product) => {
         const { _id } = product
-        fetch(`http://localhost:5000/products/advarties/${_id}`, {
+        fetch(`https://pushpali-server-iesratadhara.vercel.app/products/advarties/${_id}`, {
             method: 'PUT',
             headers: {
                 'authoraization': `bearer ${localStorage.getItem('accessToken')}`

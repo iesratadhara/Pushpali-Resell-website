@@ -20,7 +20,7 @@ const Product = ({ product }) => {
 
     const handelReportProduct = (product) => {
         const { _id } = product
-        fetch(`http://localhost:5000/report-to-admin/${_id}`, {
+        fetch(`https://pushpali-server-iesratadhara.vercel.app/report-to-admin/${_id}`, {
             method: 'PUT',
             headers: {
                 'authoraization': `bearer ${localStorage.getItem('accessToken')}`

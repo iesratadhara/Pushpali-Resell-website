@@ -97,7 +97,7 @@ const Resister = () => {
     const saveUserInDB = (user) => {
         console.log(user);
 
-        fetch('http://localhost:5000/users', {
+        fetch('https://pushpali-server-iesratadhara.vercel.app/users', {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json',

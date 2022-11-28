@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
             {
                 path: '/category/:name',
                 element: <PrivateRoute><ProductCategory></ProductCategory></PrivateRoute>,
-                loader:({params})=> fetch(`http://localhost:5000/category/${params.name}`),
+                loader:({params})=> fetch(`https://pushpali-server-iesratadhara.vercel.app/category/${params.name}`),
             
             },
             {

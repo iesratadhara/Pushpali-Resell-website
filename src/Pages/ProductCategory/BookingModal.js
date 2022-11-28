@@ -27,7 +27,7 @@ const BookingModal = ({ product, user, seller }) => {
         }
         // console.log(booking);
 
-        fetch('http://localhost:5000/products/booking', {
+        fetch('https://pushpali-server-iesratadhara.vercel.app/products/booking', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

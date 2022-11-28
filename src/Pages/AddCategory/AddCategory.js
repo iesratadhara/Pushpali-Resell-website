@@ -39,7 +39,7 @@ const AddCategory = () => {
 
     const saveCategoryToDB  =(categoryInfo)=>{
         console.log(categoryInfo);
-        fetch('http://localhost:5000/categories', {
+        fetch('https://pushpali-server-iesratadhara.vercel.app/categories', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

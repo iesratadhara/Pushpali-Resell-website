@@ -12,15 +12,15 @@ const Login = () => {
     const [loginError, setLoginError] = useState('')
     const googleProvider = new GoogleAuthProvider()
     const [userEmail, setUserEmail] = useState('')
-    const { userLogIn, googleSignIn,} = useContext(AuthContext)
+    const { userLogIn, googleSignIn, } = useContext(AuthContext)
     const navigate = useNavigate()
-    const location = useLocation() 
+    const location = useLocation()
     const [token] = useToken(userEmail)
 
     const from = location.state?.from?.pathname || '/'
 
-    if(token){
-        navigate(from,{replace:true})
+    if (token) {
+        navigate(from, { replace: true })
     }
 
 
@@ -52,11 +52,12 @@ const Login = () => {
                 }
                 setLoginError('')
                 setUserEmail(user.email)
-                
-                    saveUserInDB(googleUser)
-                     
-                
-           
+
+                saveUserInDB(googleUser)
+                navigate('/')
+
+
+
             })
             .catch((error) => {
                 console.log(error)
@@ -66,7 +67,7 @@ const Login = () => {
     const saveUserInDB = (user) => {
         console.log(user);
 
-        fetch('http://localhost:5000/users', {
+        fetch('https://pushpali-server-iesratadhara.vercel.app/users', {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json',
@@ -90,7 +91,7 @@ const Login = () => {
                 <div className="form-control w-full ">
                     <label className="label">
                         <span className="label-text text-lg">Your Email</span>
-              </label>
+                    </label>
                     <input type="email" {...register('email', { required: 'Email is requird' })} className="input input-bordered w-full input-primary " />
                     {errors.email && <p className="text-error">{errors.email?.message}</p>}
                 </div>
