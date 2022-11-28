@@ -61,6 +61,8 @@ const AllSeller = () => {
     }
     return (
         <div>
+                        <h1 className='text-3xl text-primary text-center font-semibold py-4'>All Seller </h1>
+
             <div className="overflow-x-auto w-full px-8 py-8">
                 <table className="table w-full">
                     <thead>

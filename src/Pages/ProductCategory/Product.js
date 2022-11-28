@@ -3,14 +3,39 @@ import { MdLocationPin, MdPhone, MdReport } from 'react-icons/md';
 import { BsClockFill, BsFillSuitHeartFill } from 'react-icons/bs';
 import { AuthContext } from '../../Context/AuthProvider';
 import ReactTooltip from 'react-tooltip'
+import toast from 'react-hot-toast';
+import ConformationModal from '../../Common/ConfrimationModal';
 
 const Product = ({ product }) => {
-    const { allUser} = useContext(AuthContext)
+    const { allUser, refetch } = useContext(AuthContext)
     const { name, productImg, condition, buyingPrice, sellingPrice, postTime, sellerPhone, location, useTime, sellerEmail, sellerName, productDetails } = product
 
     const seller = allUser.find(user => user.email === sellerEmail)
     // console.log(allUser);
     // console.log(seller);
+    const reportToadminModalid = 'forReportToadminModal'
+
+    const handelReportProduct = (product) => {
+        const { _id } = product
+        fetch(`http://localhost:5000/report-to-admin/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'authoraization': `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    refetch()
+                    toast.success(`Reported to admin`)
+                }
+                else{
+
+                    toast.error('Already Reported this product')
+                }
+            })
+    }
 
 
     return (
@@ -32,7 +57,11 @@ const Product = ({ product }) => {
                 </div>
                 <div className='mr-4 flex gap-4 items-center'>
                     <div><BsFillSuitHeartFill data-tip="Add Wish List" className='text-xl hover:text-secondary'></BsFillSuitHeartFill></div>
-                    <div><MdReport data-tip="Report to admin" className='text-2xl hover:text-secondary'></MdReport></div>
+                    
+                    <label htmlFor={reportToadminModalid}
+                        onClick={() => handelReportProduct}
+                        className=''><MdReport data-tip="Report to admin" className='text-2xl hover:text-secondary'></MdReport>
+                    </label>
 
                 </div>
             </div>
@@ -64,6 +93,15 @@ const Product = ({ product }) => {
 
                 </div>
             </div>
+            <ConformationModal
+                modalTitle={`Are You sure to Verify  This user ?`}
+                modalBody={'This User Will be Stored as a verifyed Seller'}
+                action={handelReportProduct}
+                actionText={'Report'}
+                actoinData={product}
+                modalId={reportToadminModalid}
+
+            ></ConformationModal>
             <ReactTooltip />
         </div>
     );
