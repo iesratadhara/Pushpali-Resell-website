@@ -1,12 +1,9 @@
-import React, { useContext } from 'react';
-import { BsClockFill, BsFillSuitHeartFill } from 'react-icons/bs';
-import { MdLocationPin, MdPhone } from 'react-icons/md';
+import React, { } from 'react';
+import { MdLocationPin } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../Context/AuthProvider';
 
 const AdvertiesProduct = ({product}) => {
-    const { allUser, refetch } = useContext(AuthContext)
-    const { name, productImg, condition, buyingPrice, sellingPrice, postTime, sellerPhone, location, useTime, sellerEmail, sellerName, productDetails,categoryId } = product
+    const { name, productImg,  sellingPrice,  location,   categoryId } = product
     return (
         <div className="card   bg-base-100  card-bordered">
              
