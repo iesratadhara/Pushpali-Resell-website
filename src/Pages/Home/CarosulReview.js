@@ -42,7 +42,7 @@ const CarosulReview = () => {
                     <figure className="px-10 pt-10">
                         <div className="avatar">
                             <div className="w-44 rounded-xl">
-                            <img src={user2} alt="" />                            </div>
+                                <img src={user2} alt="" />                            </div>
                         </div>
                     </figure>
                     <div className="card-body items-center text-center">
@@ -68,7 +68,7 @@ const CarosulReview = () => {
                     <figure className="px-10 pt-10">
                         <div className="avatar">
                             <div className="w-44 rounded-xl">
-                            <img src={user3} alt="" />                            </div>
+                                <img src={user3} alt="" />                            </div>
                         </div>
                     </figure>
                     <div className="card-body items-center text-center">
@@ -95,7 +95,7 @@ const CarosulReview = () => {
                     <figure className="px-10 pt-10">
                         <div className="avatar">
                             <div className="w-44 rounded-xl">
-                            <img src={user4} alt="" />                            </div>
+                                <img src={user4} alt="" />                            </div>
                         </div>
                     </figure>
                     <div className="card-body items-center text-center">
@@ -121,7 +121,7 @@ const CarosulReview = () => {
                     <figure className="px-10 pt-10">
                         <div className="avatar">
                             <div className="w-44 rounded-xl">
-                            <img src={user5} alt="" />                            </div>
+                                <img src={user5} alt="" />                            </div>
                         </div>
                     </figure>
                     <div className="card-body items-center text-center">

@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, } from 'react';
 import { MdLocationPin, MdPhone, MdReport } from 'react-icons/md';
 import { BsClockFill, BsFillSuitHeartFill } from 'react-icons/bs';
 import { AuthContext } from '../../Context/AuthProvider';
 import ReactTooltip from 'react-tooltip'
 import toast from 'react-hot-toast';
 import ConformationModal from '../../Common/ConfrimationModal';
+import BookingModal from './BookingModal';
 
 const Product = ({ product }) => {
-    const { allUser, refetch } = useContext(AuthContext)
+    const { allUser, user, refetch } = useContext(AuthContext)
     const { name, productImg, condition, buyingPrice, sellingPrice, postTime, sellerPhone, location, useTime, sellerEmail, sellerName, productDetails } = product
+
 
     const seller = allUser.find(user => user.email === sellerEmail)
     // console.log(allUser);
@@ -30,7 +32,7 @@ const Product = ({ product }) => {
                     refetch()
                     toast.success(`Reported to admin`)
                 }
-                else{
+                else {
 
                     toast.error('Already Reported this product')
                 }
@@ -57,7 +59,7 @@ const Product = ({ product }) => {
                 </div>
                 <div className='mr-4 flex gap-4 items-center'>
                     <div><BsFillSuitHeartFill data-tip="Add Wish List" className='text-xl hover:text-secondary'></BsFillSuitHeartFill></div>
-                    
+
                     <label htmlFor={reportToadminModalid}
                         onClick={() => handelReportProduct}
                         className=''><MdReport data-tip="Report to admin" className='text-2xl hover:text-secondary'></MdReport>
@@ -72,7 +74,7 @@ const Product = ({ product }) => {
                 <h2 className="card-title">
                     {name}
                 </h2>
-                <div className='grid grid-cols-2 gap-10 my-4'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 my-4'>
                     <div>
                         <h2 className='font-semibold'>Selling Price: <span className='  text-3xl font-bold'>${sellingPrice}</span></h2>
                         <h2 className='badge badge-outline font-bold my-2 p-4'>Buying Price: <span className='font-semibold' >${buyingPrice}</span></h2>
@@ -87,12 +89,16 @@ const Product = ({ product }) => {
                 </div>
 
                 <p className='my-4'> <span className='font-bold'>Details: </span>{productDetails}</p>
+                <label htmlFor="booking-modal" className="btn btn-primary text-white font-bold  bg-gradient-to-r from-secondary to-primary">book Product</label>
 
-                <div className='card-actions'>
-                    <button className="btn btn-secondary w-full font-semibold flex  justify-center">Buy Now</button>
-
-                </div>
             </div>
+            <BookingModal
+                product={product}
+                user={user}
+                seller={seller}
+                 
+            ></BookingModal>
+
             <ConformationModal
                 modalTitle={`Are You sure to Verify  This user ?`}
                 modalBody={'This User Will be Stored as a verifyed Seller'}
@@ -100,6 +106,7 @@ const Product = ({ product }) => {
                 actionText={'Report'}
                 actoinData={product}
                 modalId={reportToadminModalid}
+                
 
             ></ConformationModal>
             <ReactTooltip />
