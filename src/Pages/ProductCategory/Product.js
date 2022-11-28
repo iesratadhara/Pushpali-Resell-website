@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip'
 import toast from 'react-hot-toast';
 import ConformationModal from '../../Common/ConfrimationModal';
 import BookingModal from './BookingModal';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 
 const Product = ({ product }) => {
     const { allUser, user, refetch } = useContext(AuthContext)
@@ -53,7 +54,8 @@ const Product = ({ product }) => {
                     </div>
 
                     <div className=''>
-                        <h4 className='font-semibold'>{sellerName}</h4>
+                        <h4 className='font-semibold '>{seller?.verified === true ?
+                            <AiOutlineCheckCircle className='text-blue-800 text-2xl mr-2 inline-flex'></AiOutlineCheckCircle> : ''}{sellerName}</h4>
                         <p className='inline-flex text-sm items-center'><BsClockFill className='mr-2'></BsClockFill><span>{postTime}</span></p>
                     </div>
                 </div>
@@ -96,7 +98,7 @@ const Product = ({ product }) => {
                 product={product}
                 user={user}
                 seller={seller}
-                 
+
             ></BookingModal>
 
             <ConformationModal
@@ -106,7 +108,7 @@ const Product = ({ product }) => {
                 actionText={'Report'}
                 actoinData={product}
                 modalId={reportToadminModalid}
-                
+
 
             ></ConformationModal>
             <ReactTooltip />

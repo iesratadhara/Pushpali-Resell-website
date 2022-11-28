@@ -93,6 +93,10 @@ export const router = createBrowserRouter([
                 path: '/dashboard/reported-product',
                 element:  <AdminRoute><ReportrdProduct></ReportrdProduct></AdminRoute>
             },
+            {
+                path: '/dashboard/add-category',
+                element:  <AdminRoute><AddCategory></AddCategory></AdminRoute>
+            },
 
 
 
